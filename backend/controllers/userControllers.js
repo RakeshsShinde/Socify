@@ -79,6 +79,37 @@ const searchUsers = async (req, res, next) => {
 }
 
 
+const updatePassword = async (req, res, next) => {
+    try {
+        const { oldpassword, newpassword } = req.body;
+
+        const loggedinUser = await User.findById(req.user._id);
+        passwordMatch = await loggedinUser.comparePassword(oldpassword);
+
+        if (!passwordMatch) {
+            return next(new errorHandler('please enter the correct password !', 404));
+        }
+
+        loggedinUser.password = newpassword;
+
+        await loggedinUser.save();
+
+        res.cookie('token', null, {              //logout user after password updated !
+            expires: new Date(Date.now()),
+            httpOnly: true,
+        })
+
+        return res.status(200).json({
+            sucess: true,
+            message: 'update password successFully !'
+        })
+
+    } catch (err) {
+        next(err)
+    }
+}
+
+
 const followAndunfollowuser = async (req, res, next) => {
     const { userId } = req.params;
     const { user } = req;
@@ -128,4 +159,9 @@ const logout = async (req, res, next) => {
 
 
 
-module.exports = { signup, login, logout, followAndunfollowuser, searchUsers };
+module.exports =
+{
+    signup, login, logout,
+    followAndunfollowuser, searchUsers,
+    updatePassword,
+};
