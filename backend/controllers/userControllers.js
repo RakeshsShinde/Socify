@@ -1,7 +1,8 @@
 const User = require('../models/Usermodel');
 const sendcookie = require('../utils/sendcookie')
 const errorHandler = require('../utils/errorHandler')
-
+const sendEmail = require('../utils/sendEmail');
+const crypto = require('crypto');
 
 const signup = async (req, res, next) => {
     const { username, email, password } = req.body;
@@ -94,10 +95,6 @@ const updatePassword = async (req, res, next) => {
 
         await loggedinUser.save();
 
-        res.cookie('token', null, {              //logout user after password updated !
-            expires: new Date(Date.now()),
-            httpOnly: true,
-        })
 
         return res.status(200).json({
             sucess: true,
@@ -107,6 +104,85 @@ const updatePassword = async (req, res, next) => {
     } catch (err) {
         next(err)
     }
+}
+
+const resetpassword = async (req, res, next) => {
+    const { token, password } = req.body;
+
+    try {
+        const resetPasswordToken = crypto.createHash('sha256').update(token).digest("hex");
+        const user = await User.findOne({
+            resetPasswordToken,
+            resetPasswordExpiry: {
+                $gt: Date.now(),
+            }
+        })
+
+        if (!user) {
+            return next(new errorHandler(`invalid token or token expire !`, 404));
+        }
+
+        user.password = password;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpiry = undefined;
+        await user.save();
+
+
+        return res.status(200).json({
+            sucess: true,
+            message: "password reset sucessfully !"
+        })
+
+    } catch (err) {
+        next(err)
+    }
+}
+
+
+const forgotpassword = async (req, res, next) => {
+    try {
+        const { email } = req.body;
+        const user = await User.findOne({ email });
+
+
+        if (!user) {
+            return next(new errorHandler('user does not exists !'));
+        }
+
+        const resetToken = await user.generateResetToken();
+
+        await user.save();
+
+        const reseturl = `${req.protocol}://${req.hostname}/user/forgotpassword/${resetToken}`;
+
+        const message = `reset your password using link below :\n\n ${reseturl}`;
+
+        try {
+            await sendEmail({
+                email: user.email,
+                subject: "Password recovery",
+                message,
+            })
+
+            return res.status(200).json({
+                success: true,
+                message: `Email sent to ${user.email} sucessfully !`
+
+            })
+        } catch (err) {
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExpiry = undefined;
+
+            await user.save();
+
+            return next(new errorHandler(err, 500));
+        }
+
+    } catch (err) {
+        next(err);
+    }
+
+
 }
 
 
@@ -163,5 +239,6 @@ module.exports =
 {
     signup, login, logout,
     followAndunfollowuser, searchUsers,
-    updatePassword,
+    updatePassword, forgotpassword,
+    resetpassword
 };
