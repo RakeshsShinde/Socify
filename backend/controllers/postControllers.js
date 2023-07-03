@@ -94,7 +94,7 @@ const getPostofFollowing = async (req, res, next) => {
         }
 
         const followingIds = user.following;       //userid to which user following 
-        const allposts = await Post.find({ postBy: { $in: followingIds } })
+        const allposts = await Post.find({ postBy: { $in: followingIds } }).populate('postBy', 'username profilePic');
         return res.status(200).json({
             sucess: true,
             allposts
