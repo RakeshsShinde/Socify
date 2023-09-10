@@ -1,4 +1,4 @@
-
+const User = require('../models/Usermodel');
 const sendCookie = async (user = {}, res, statusCode) => {
     const token = await user.generateToken();
 
@@ -8,9 +8,9 @@ const sendCookie = async (user = {}, res, statusCode) => {
         ),
         httpOnly: true
     }
-
+    user = await User.findById(user._id).select('-password');      //display user without password 
     res.status(statusCode).cookie('token', token, options).json({
-        sucess: true,
+        message: 'successfully Login !',
         user
     })
 }

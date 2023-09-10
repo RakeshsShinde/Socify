@@ -26,7 +26,7 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
-        required: [true, 'please eneter password '],
+        required: [true, 'password  '],
 
     },
 
@@ -46,8 +46,12 @@ const userSchema = new Schema({
     }],
 
     profilePic: {
-        public_id: String,
-        secure_url: String,
+        public_id: {
+            type: String,
+        },
+        url: {
+            type: String,
+        }
     },
 
     followers: [

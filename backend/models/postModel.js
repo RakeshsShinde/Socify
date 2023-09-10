@@ -10,10 +10,7 @@ const postSchema = new Schema({
         type: String,
     },
 
-    tags: {
-        type: [String],
-        default: []
-    },
+    tags: [String],
     images: [
         {
             public_id: String,

@@ -13,6 +13,14 @@ const replaySchema = new Schema({
         required: true,
 
     },
+
+    likes: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+        }
+    ],
+
     comment: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Comment",
