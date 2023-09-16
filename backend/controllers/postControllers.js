@@ -24,8 +24,6 @@ const createNewPost = async (req, res, next) => {
             images = req.body.postimages;
         }
 
-        console.log(req.body.postimages.length);
-
         let imageLinks = [];
 
         for (let i = 0; i < images.length; i++) {
@@ -204,8 +202,6 @@ const deletePost = async (req, res, next) => {
     }
 }
 
-
-
 const LikeAndUnlikePost = async (req, res, next) => {
     const { postId } = req.params;
     try {
@@ -242,7 +238,6 @@ const LikeAndUnlikePost = async (req, res, next) => {
     }
 
 }
-
 
 const getTrendingPosts = (async (req, res, next) => {
     try {
@@ -289,8 +284,6 @@ const getTrendingPosts = (async (req, res, next) => {
 })
 
 
-
-
 //get single post
 
 const getPost = async (req, res, next) => {
@@ -326,9 +319,6 @@ const getPost = async (req, res, next) => {
         next(err)
     }
 }
-
-
-
 
 
 const createNewComment = async (req, res, next) => {
@@ -565,11 +555,101 @@ const deleteReplay = async (req, res, next) => {
     }
 }
 
+const getPostsByTagAndLocation = async (req, res, next) => {
+    try {
+        const { tag, location } = req.query;
+        let query = {};
+        console.log(req.query);
+
+        if (tag) {
+            query.tags = { $in: [tag] };
+        }
+
+        if (location) {
+            query.location = location;
+        }
+
+        const posts = await Post.find(query).sort({ createdAt: -1 });
+        const coverImage = posts.length > 0 ? posts[0].images[0] : null;
+        const title = location || tag;
+
+        res.json({
+            title,
+            posts,
+            coverImage,
+            totalPosts: posts?.length
+        });
+    } catch (err) {
+        next(err);
+    }
+}
+
+
+const getuserPosts = async (req, res, next) => {
+    const { userId } = req.params;
+    const { tab } = req.query;
+    try {
+        if (tab === "posts") {
+            var postsByUser = await Post.find({ postBy: userId })
+                .populate('postBy', 'username profilePic ')
+                .populate('likes', 'username profilepic email')
+                .populate({
+                    path: 'comments',
+                    populate: [
+                        {
+                            path: 'commentBy',
+                            select: 'username email profilePic',
+                        },
+                        {
+                            path: 'likes',
+                            select: 'username email profilePic',
+                        },
+                        {
+                            path: 'replies',
+                            populate: {
+                                path: 'replayBy',
+                                select: 'username email profilePic',
+                            },
+                        },
+                    ],
+                }).sort({ createdAt: -1 });
+        } else if (tab === "saved") {
+            var savedPostsByUser = await Post.find({ saveBy: userId })
+                .populate('postBy', 'username profilePic ')
+                .populate('likes', 'username profilepic email')
+                .populate({
+                    path: 'comments',
+                    populate: [
+                        {
+                            path: 'commentBy',
+                            select: 'username email profilePic',
+                        },
+                        {
+                            path: 'likes',
+                            select: 'username email profilePic',
+                        },
+                        {
+                            path: 'replies',
+                            populate: {
+                                path: 'replayBy',
+                                select: 'username email profilePic',
+                            },
+                        },
+                    ],
+                }).sort({ createdAt: -1 });
+        }
+        const posts = tab === "posts" ? postsByUser : savedPostsByUser;
+        return res.status(200).json({ posts });
+    } catch (err) {
+        next(err)
+    }
+}
+
 
 
 module.exports = {
     createNewPost, LikeAndUnlikePost, UpdatePost, deletePost,
     getPostofFollowing, getTrendingPosts, getPost, searchPost,
-    createNewComment, LikeandUnlikeComment, deleteComment, savepost,
-    createNewReplay, likeAndunlikeReplay, deleteReplay
+    createNewComment, LikeandUnlikeComment, deleteComment, savepost, getuserPosts,
+    createNewReplay, likeAndunlikeReplay, deleteReplay, getPostsByTagAndLocation
 };

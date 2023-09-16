@@ -12,7 +12,6 @@ Router.route('/forgotpassword').post(forgotpassword);
 Router.route('/resetpassword').put(resetpassword);
 Router.route('/search').get(authenticate, searchUsers);
 Router.route('/profile/:userId').get(authenticate, getUser);
-Router.route('/profile/:userId/posts').get(authenticate, getPostsByTab);
 Router.route('/updatePassword').put(authenticate, updatePassword);
 Router.route('/edit/Profile').put(authenticate, editProfile);
 Router.route('/follow/:userId').post(authenticate, followAndunfollowuser);
