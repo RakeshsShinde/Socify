@@ -1,5 +1,4 @@
 const Post = require('../models/postModel');
-const User = require('../models/Usermodel');
 const errorHandler = require('../utils/errorHandler');
 const Comment = require('../models/commentModel');
 const Replay = require('../models/replaymodel');
@@ -311,6 +310,9 @@ const getPost = async (req, res, next) => {
                         },
                     },
                 ],
+                options: {
+                    sort: { createdAt: -1 }
+                },
             });
         return res.status(200).json({
             post
