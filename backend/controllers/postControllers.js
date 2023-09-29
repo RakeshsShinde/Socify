@@ -561,7 +561,6 @@ const getPostsByTagAndLocation = async (req, res, next) => {
     try {
         const { tag, location } = req.query;
         let query = {};
-        console.log(req.query);
 
         if (tag) {
             query.tags = { $in: [tag] };
