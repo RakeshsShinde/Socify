@@ -304,10 +304,16 @@ const getPost = async (req, res, next) => {
                     },
                     {
                         path: 'replies',
-                        populate: {
-                            path: 'replayBy',
-                            select: 'username email profilePic',
-                        },
+                        populate: [
+                            {
+                                path: 'replayBy',
+                                select: 'username email profilePic'
+                            },
+                            {
+                                path: 'likes',
+                                select: 'username email profilePic'
+                            }
+                        ],
                     },
                 ],
                 options: {
