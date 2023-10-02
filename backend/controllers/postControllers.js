@@ -64,7 +64,7 @@ const createNewPost = async (req, res, next) => {
 }
 
 //search post using tags
-const searchPost = async (req, res, next) => {
+const searchPostsByTags = async (req, res, next) => {
     try {
         const { keyword } = req.query;
         const matchingPosts = await Post.find({ tags: { $regex: keyword, $options: 'i' } });
@@ -91,6 +91,35 @@ const searchPost = async (req, res, next) => {
     }
 
 }
+
+const searchPostsByLocation = async (req, res, next) => {
+    const { keyword } = req.query;
+    try {
+        const matchingPosts = await Post.find({ location: { $regex: keyword, $options: 'i' } });
+
+        var locationCounts = new Map();
+        matchingPosts.forEach((post) => {
+            const location = post.location;
+            if (!locationCounts.has(location)) {
+                locationCounts.set(location, 1);
+            }
+            else {
+                locationCounts.set(location, locationCounts.get(location) + 1);
+            }
+        })
+
+        const locationsWithCounts = Array.from(locationCounts).map(([location, count]) => ({
+            location,
+            totalPosts: count,
+        }));
+
+        return res.status(200).json(locationsWithCounts);
+    } catch (err) {
+        next(err);
+    }
+}
+
+
 const getPostofFollowing = async (req, res, next) => {
     const { user } = req;
     try {
@@ -291,7 +320,7 @@ const getPost = async (req, res, next) => {
     try {
 
         const post = await Post.findById(postId).populate('postBy', 'username profilePic ')
-            .populate('likes', 'username profilepic email')
+            .populate('likes', 'username profilePic email')
             .populate({
                 path: 'comments',
                 populate: [
@@ -656,8 +685,8 @@ const getuserPosts = async (req, res, next) => {
 
 
 module.exports = {
-    createNewPost, LikeAndUnlikePost, UpdatePost, deletePost,
-    getPostofFollowing, getTrendingPosts, getPost, searchPost,
+    createNewPost, LikeAndUnlikePost, UpdatePost, deletePost, searchPostsByLocation,
+    getPostofFollowing, getTrendingPosts, getPost, searchPostsByTags,
     createNewComment, LikeandUnlikeComment, deleteComment, savepost, getuserPosts,
     createNewReplay, likeAndunlikeReplay, deleteReplay, getPostsByTagAndLocation
 };

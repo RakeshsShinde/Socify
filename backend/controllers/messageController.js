@@ -13,7 +13,6 @@ const sendMessage = async (req, res, next) => {
         content,
         chat: chatId,
         sender: req.user._id,
-
     }
     try {
         let message = await Message.create(newMessage);
