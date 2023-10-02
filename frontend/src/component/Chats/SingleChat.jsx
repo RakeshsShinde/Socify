@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, Stack, IconButton, CircularProgress, TextField } from '@mui/material';
+import { Box, Typography, Stack, IconButton, CircularProgress, TextField, Button, Tooltip } from '@mui/material';
 import { HiArrowLeft } from 'react-icons/hi';
 import { BsFillSendFill, BsInfoCircle } from 'react-icons/bs';
 import { unselectChat } from '../../reducers/chatreducers/chatSlice';
@@ -17,6 +17,7 @@ import Lottie from 'react-lottie';
 import useStyles from './singleChat.style';
 import { useSocket } from '../../context/SocketProvider';
 import UpdateGroupModal from '../miscellaneous/modal/UpdateGroupModal';
+import ProfileViewModal from '../miscellaneous/modal/ProfileViewModal';
 
 var selectedChatCmp;
 const SingleChat = () => {
@@ -24,6 +25,7 @@ const SingleChat = () => {
     const [newmessage, setnewmessage] = useState('');
     const [typing, settyping] = useState(false);
     const [isTyping, setisTyping] = useState(false);
+    const [openProfileModal, setopenProfileModal] = useState(false);
 
     const dispatch = useDispatch();
     const classes = useStyles();
@@ -65,6 +67,7 @@ const SingleChat = () => {
                 } else {
                     dispatch(setMessages([...messages, newMessageReceived]))
                 }
+                dispatch(fetchAllchats());
             })
             return () => {
                 Socket.off('message received');
@@ -75,6 +78,10 @@ const SingleChat = () => {
 
     const handleClose = () => {
         setopenUpdateGroup(false);
+    }
+
+    const handleProfileModalClose = () => {
+        setopenProfileModal(false);
     }
 
     const fetchMessages = async () => {
@@ -107,14 +114,16 @@ const SingleChat = () => {
     }
 
     const sendmessage = async (e) => {
-        if (e.key == "Enter" && newmessage) {
+        if ((!e || e.key === "Enter") && newmessage) {
             Socket.emit("stop typing", selectedChat._id);
             const { payload } = await dispatch(sendMessage({ chatId: selectedChat._id, content: newmessage }));
             setnewmessage("");
             Socket.emit("new message", payload);
             await dispatch(setMessages([...messages, payload]));
+            dispatch(fetchAllchats());
         }
     }
+
 
     return (
         <>
@@ -128,14 +137,18 @@ const SingleChat = () => {
                         </IconButton>
                         <Typography variant='h6'>{!selectedChat.isgroupChat ? getSenderInfo(user, selectedChat.users).username : selectedChat.chatName}</Typography>
                         {!selectedChat.isgroupChat ? (
-                            <IconButton>
-                                <AiFillEye size={22} />
-                            </IconButton>
+                            <Tooltip title={'view profile'} placement='bottom'>
+                                <IconButton onClick={() => setopenProfileModal(true)}>
+                                    <AiFillEye size={22} />
+                                </IconButton>
+                            </Tooltip>
                         )
                             : (
-                                <IconButton onClick={() => setopenUpdateGroup(true)}>
-                                    <BsInfoCircle size={22} />
-                                </IconButton>
+                                <Tooltip title={'group info'} placement='bottom'>
+                                    <IconButton onClick={() => setopenUpdateGroup(true)}>
+                                        <BsInfoCircle size={22} />
+                                    </IconButton>
+                                </Tooltip>
                             )}
                     </Stack>
                     <Box className={classes.messageContainer} >
@@ -168,14 +181,22 @@ const SingleChat = () => {
                                 placeholder='send something..'
                                 type='text'
                                 size='small'
-                                onKeyDown={sendmessage}
+                                onKeyDown={(e) => sendmessage(e)}
                                 value={newmessage}
                                 onChange={typinghandler}
                             />
-                            <BsFillSendFill size={25} style={{
+                            <Button onClick={sendmessage} sx={{
                                 cursor: newmessage ? "pointer" : "not-allowed",
-                                color: newmessage ? "#06d6a0" : "#086375"
-                            }} />
+                                color: "white",
+                                textAlign: 'center',
+                                backgroundColor: '#06d6a0',
+                                "&:hover": {
+                                    backgroundColor: '#06d6a0',
+
+                                }
+                            }} endIcon={<BsFillSendFill size={18} />}>
+                                Send
+                            </Button>
                         </Box>
                     </Box>
                 </>
@@ -185,6 +206,7 @@ const SingleChat = () => {
                 </Box>
             )}
             <UpdateGroupModal open={openUpdateGroup} onClose={handleClose} fetchMessages={fetchMessages} />
+            <ProfileViewModal open={openProfileModal} onClose={handleProfileModalClose} user={getSenderInfo(user, selectedChat?.users)} />
         </>
     );
 }

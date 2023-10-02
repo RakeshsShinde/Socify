@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '10px'
     },
     msginput: {
-        width: '95%',
+        width: '90%',
     }
 }))
 

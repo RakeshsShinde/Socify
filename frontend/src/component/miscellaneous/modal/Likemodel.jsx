@@ -13,7 +13,7 @@ const LikeDialog = ({ heading, open, handleClose, users }) => {
         >
             <DialogTitle id="scroll-dialog-title">{users?.length} {heading}</DialogTitle>
             <Divider sx={{ width: '100%' }} />
-            <DialogContent sx={{ width: '400px' }} dividers={scroll === 'paper'}>
+            <DialogContent sx={{ width: '450px', maxHeight: '450px' }} dividers={scroll === 'paper'}>
                 <DialogContentText
                     id="scroll-dialog-description"
                     tabIndex={-1}

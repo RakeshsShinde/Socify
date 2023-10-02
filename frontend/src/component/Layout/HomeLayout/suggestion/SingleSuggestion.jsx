@@ -12,6 +12,7 @@ const SingleSuggestion = ({ user }) => {
     const [follow, setfollow] = useState(false);
     const dispatch = useDispatch();
     const { user: loggedinUser } = useSelector((state) => state.Login);
+    const postOwner = loggedinUser?._id === user._id;
 
     useEffect(() => {
         setfollow(loggedinUser?.following?.some((u) => u === user._id))
@@ -38,8 +39,13 @@ const SingleSuggestion = ({ user }) => {
                     <Typography variant='subtitle2' className={classes.message}>{user.email}</Typography>
                 </Stack>
                 <Box className={classes.iconContainer}>
-                    {follow ? <FiUserCheck onClick={handleFollow} color='#0fa3b1' size={20} className={classes.icon} />
-                        : <FiUserPlus onClick={handleFollow} size={20} className={classes.icon} />}
+                {!postOwner && (
+                        follow ? (
+                            <FiUserCheck onClick={handleFollow} color='#0fa3b1' size={20} className={classes.icon} />
+                        ) : (
+                            <FiUserPlus onClick={handleFollow} size={20} className={classes.icon} />
+                        )
+                    )}
                 </Box>
             </Stack>
         </Box>

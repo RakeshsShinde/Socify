@@ -20,7 +20,7 @@ const SingleComment = ({ comment }) => {
     const [LikeDialogOpen, setLikeDialogOpen] = useState(false);
     const { user } = useSelector((state) => state.Login);
     const dispatch = useDispatch();
-    const authUser = user._id === comment.commentBy?._id;
+    const authUser = user?._id === comment.commentBy?._id;
 
     useEffect(() => {
         setlike(comment.likes?.some((c) => c._id === user._id));

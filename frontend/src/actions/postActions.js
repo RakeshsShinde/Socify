@@ -146,5 +146,15 @@ export const savePost = createAsyncThunk('savePost', async (postId, { rejectWith
 })
 
 
+export const getTrendingTags = createAsyncThunk('trendingTags', async (_, { rejectWithValue }) => {
+    try {
+        const { data } = await axios.get(`/post/trending`);
+        return data;
+    } catch (err) {
+        return rejectWithValue(err.response?.data?.message);
+    }
+})
+
+
 
 

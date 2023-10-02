@@ -8,11 +8,12 @@ import { toast } from 'react-toastify';
 import Sidebar from './Sidebar/Sidebar';
 import { fetchAllchats } from '../../actions/chatActions';
 import { setselectedChat } from '../../reducers/chatreducers/chatSlice';
-import { getSenderInfo } from '../../Helper/ChatLogic';
+import { formatLatestMessage, getSenderInfo } from '../../Helper/ChatLogic';
 import { clearError, clearSuccess } from '../../reducers/chatreducers/updateProfileSlice'
 import { clearAddNRemoveError, clearAddNRemoveSuccess } from '../../reducers/chatreducers/addNRemoveUsersSlice'
 import GroupModal from '../miscellaneous/modal/CreatGroupModal';
 import useStyles from './mychats.style';
+import { formatDateinChat } from '../../Helper/FormatDate';
 
 const MyChats = () => {
     const classes = useStyles();
@@ -106,16 +107,21 @@ const MyChats = () => {
                             }}
                         >
                             <Avatar src={c ? (!c.isgroupChat ? getSenderInfo(user, c.users).profilePic.url : c.profilePic?.url) : ''} alt={'profilePic'} sx={{ width: '40px', height: '40px' }} />
-                            <Box className={classes.chatInfoWrapper} >
-                                <Typography variant='subtitle1'>
+                            <Box className={classes.chatInfoWrapper}  >
+                                <Typography variant='subtitle1' className={classes.chatName} >
                                     {c ? (!c.isgroupChat ? getSenderInfo(user, c.users).username : c.chatName) : ''}
                                 </Typography>
-                                <Typography variant='subtitle2' >{c ? (!c.isgroupChat ? getSenderInfo(user, c.users).email : "") : ''}</Typography>
+                                {c.latestMessage && (
+                                    <Typography variant='subtitle1' >
+                                        {c.latestMessage?.sender?.username}:{" "}
+                                        <span >{formatLatestMessage(c.latestMessage?.content)}</span>
+                                    </Typography>
+
+                                )}
                             </Box>
-                            <Stack className={classes.messageCountTime}>
-                                <Typography variant='subtitle2'>1 hour ago</Typography>
-                                <Typography variant='subtitle2' className={classes.unreadMessageCount}>10</Typography>
-                            </Stack>
+                            {c.latestMessage && (
+                                <Typography variant='subtitle2'>{formatDateinChat(c.latestMessage?.createdAt)}</Typography>
+                            )}
                         </Stack>
                     ))}
                 </Stack>

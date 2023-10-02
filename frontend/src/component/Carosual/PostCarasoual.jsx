@@ -7,7 +7,7 @@ import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles((theme) => ({
     image: {
         objectFit: 'cover',
-        maxHeight: '450px',
+        maxHeight: '500px',
         width: '100%',
     }
 

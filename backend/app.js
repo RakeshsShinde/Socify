@@ -49,7 +49,7 @@ const io = require('socket.io')(server, {
     }
 })
 
-
+const usersInChats = new Map(); 
 io.on('connection', (socket) => {
     console.log('connected to socket.io');
 
@@ -82,10 +82,10 @@ io.on('connection', (socket) => {
         })
     })
 
-    socket.on('new like', (likedata) => {
-        console.log(likedata);
-        socket.to(likedata.post?.postBy?._id).emit('post like', likedata);
-    })
+    // socket.on('new like', (likedata) => {
+    //     console.log(likedata);
+    //     socket.to(likedata.post?.postBy?._id).emit('post like', likedata);
+    // })
 
 
     socket.off('setup', () => {

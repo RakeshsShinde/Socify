@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import { AiFillMessage, AiOutlineMessage, AiOutlineSetting } from 'react-icons/ai'
-import { LuMessageCircle } from 'react-icons/lu'
-import { RiHome2Line, RiHome2Fill } from 'react-icons/ri'
-import { CiSaveUp2 } from 'react-icons/ci'
+import { RiHome2Line, RiHome2Fill, RiUser3Line, RiUser3Fill } from 'react-icons/ri'
+import { useSelector } from 'react-redux';
+import { CiSaveUp2, CiUser } from 'react-icons/ci'
 import { Link } from 'react-router-dom';
 import useStyles from './Footer.style'
 import CreateNewPost from '../../Posts/CreateNewPost';
+import { BiSolidUser } from 'react-icons/bi';
 
 
 const Footer = () => {
     const classes = useStyles();
     const [value, setValue] = React.useState('home');
     const [openpostmodel, setopenpostmodel] = useState(false);
+    const { user } = useSelector((state) => state.Login);
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -58,14 +60,22 @@ const Footer = () => {
                     label="Post"
                     value="post"
                     classes={{ selected: classes.selected }}
-                    icon={value == "post" ? <CiSaveUp2 className={classes.selected} size={25} onClick={AddNewPost} /> : <CiSaveUp2 size={25} onClick={AddNewPost} />}
+                    icon={value == "post" ?
+                        <CiSaveUp2 className={classes.selected} size={25} onClick={AddNewPost} />
+                        : <CiSaveUp2 size={25} onClick={AddNewPost} />}
                 />
 
                 <BottomNavigationAction
-                    label="Setting"
-                    value="setting"
+                    label="Profile"
+                    value="profile"
                     classes={{ selected: classes.selected }}
-                    icon={value == "setting" ? <AiOutlineSetting className={classes.selected} size={25} /> : <AiOutlineSetting size={25} />}
+                    icon={value == "profile" ?
+                        <Link to={`/profile/${user?._id}`}>
+                            <BiSolidUser className={classes.selected} size={25} />
+                        </Link> :
+                        <Link to={`/profile/${user?._id}`}>
+                            <CiUser size={25} />
+                        </Link>}
                 />
             </BottomNavigation >
             <CreateNewPost open={openpostmodel} setopen={setopenpostmodel} />

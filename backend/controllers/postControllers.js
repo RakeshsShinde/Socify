@@ -95,6 +95,7 @@ const getPostofFollowing = async (req, res, next) => {
     const { user } = req;
     try {
         const followingUsersId = user.following.map((user) => user);
+        followingUsersId.push(user._id);                               //to get own posts
         const posts = await Post.find({ postBy: { $in: followingUsersId } })
             .populate('postBy', 'username profilePic ')
             .populate('likes', 'username profilePic email')
@@ -599,7 +600,7 @@ const getuserPosts = async (req, res, next) => {
         if (tab === "posts") {
             var postsByUser = await Post.find({ postBy: userId })
                 .populate('postBy', 'username profilePic ')
-                .populate('likes', 'username profilepic email')
+                .populate('likes', 'username profilePic email')
                 .populate({
                     path: 'comments',
                     populate: [

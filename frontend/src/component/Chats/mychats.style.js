@@ -82,7 +82,8 @@ const useStyles = makeStyles((theme) => ({
         padding: '5px 8px',
         display: 'flex',
         flexDirection: 'column',
-        flexGrow: 1
+        flexGrow: 1,
+        fontFamily: "'Poppins', sans-serif !important"
     },
     messageCountTime: {
         flexDirection: 'column',
@@ -97,6 +98,10 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '50%',
         color: 'white',
         paddingTop: '3px'
+    },
+    chatName: {
+        fontSize: '18px',
+        fontWeight: '500 !important ',
     },
     drawerWrapper: {
         width: '320px',

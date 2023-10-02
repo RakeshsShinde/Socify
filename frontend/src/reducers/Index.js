@@ -17,6 +17,7 @@ import replayLikeReducer from './CommentReducers/likeReplaySlice';
 import replayCommentReducer from './CommentReducers/ReplaySlice';
 import deleteReplayReducer from './CommentReducers/DeleteReplaySlice';
 import suggestionSlice from './UserReducers/SuggestionSlice';
+import trendingTagsReducer from './PostReducers/TrendingTagsSlice';
 import forgotPasswordReducer from './UserReducers/forgotPassSlice';
 import resetPasswordReducer from './UserReducers/resetPasswordSlice';
 import searchUserReducer from './UserReducers/searchUserSlice';
@@ -58,6 +59,7 @@ const rootReducer = combineReducers({
     SavePost: savePostReducer,
     UserProfile: userProfileReducer,
     PostsByTagNLocation: PostsbyTagNLocationSlice,
+    TrendingTags: trendingTagsReducer,
     Chats: Chatreducer,
     NewGroup: newGroupReducer,
     UpdateGroup: updateGroupreducer,

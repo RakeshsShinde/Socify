@@ -1,6 +1,6 @@
 import { Avatar, MenuItem, Stack, Typography } from '@mui/material';
 import React from 'react';
-import { getSenderInfo } from '../../../../Helper/ChatLogic';
+import { formatLatestMessage, getSenderInfo } from '../../../../Helper/ChatLogic';
 import { setselectedChat } from '../../../../reducers/chatreducers/chatSlice';
 import { setNotification } from '../../../../reducers/notificationReducer/notificationReducer';
 import { useSelector, useDispatch } from 'react-redux';
@@ -27,7 +27,7 @@ const NotificationItem = ({ user, notification }) => {
         await dispatch(setNotification(allnotification.filter((n) => n !== notification)))
         await navigate('/chats');
     }
-    
+
     return (
         <MenuItem onClick={handleClick}
             sx={{ padding: '8px 15px', display: 'flex', gap: '1.2rem' }} >
@@ -44,7 +44,7 @@ const NotificationItem = ({ user, notification }) => {
                     {senderInfo.username}:
                     {" "}
                     <span style={{ fontSize: '14px', color: 'gray' }}>
-                        {notification.content}
+                        {formatLatestMessage(notification?.content)}
                     </span>
                 </Typography>
             </Stack>

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { Avatar, Box, Button, Stack, Tab, Tabs, Typography } from '@mui/material';
 import SinglePost from '../component/Posts/SinglePost';
 import Likemodel from '../component/miscellaneous/modal/Likemodel';
@@ -23,6 +23,7 @@ import { setUser } from '../reducers/UserReducers/LoginSlice';
 import { followUser } from '../actions/userActions';
 import { toast } from 'react-toastify';
 import useStyles from './profile.style';
+import { accessChat } from '../actions/chatActions';
 
 const Profile = () => {
     const { userId } = useParams();
@@ -32,6 +33,7 @@ const Profile = () => {
     const [selectTab, setselectTab] = useState('posts');
     const [follow, setfollow] = useState(false);
     const postsRef = useRef(null);
+    const profileRef = useRef(null);
     const { user: authuser } = useSelector((state) => state.Login);
     const dispatch = useDispatch();
     const classes = useStyles();
@@ -49,10 +51,22 @@ const Profile = () => {
     const { success: replaylikeSuccess, error: replaylikeError, message: replaylikeMeesage } = useSelector((state) => state.LikeReplay);
     const { success: deleteReplaySuccess, error: deleteReplayError, message: deleteReplayMessage } = useSelector((state) => state.DeleteReplay);
     const loggedinUser = authuser._id === userId;
+    const navigate = useNavigate();
 
     useEffect(() => {
         setfollow(authuser.following?.some((u) => u === user._id))
     }, [authuser?.following])
+
+    useEffect(() => {
+        scrollToProfile();
+    }, [])
+
+
+    const scrollToProfile = () => {
+        if (profileRef.current) {
+            profileRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
 
     useEffect(() => {
         if (followSuccess) {
@@ -184,10 +198,19 @@ const Profile = () => {
     const closeFollowerDialog = () => {
         setFollowerDialog(false);
     }
+    const handleAccessChat = async (userId) => {
+        try {
+            await dispatch(accessChat({ userId }));
+            await navigate('/chats');
+        } catch (err) {
+            console.log(err);
+            toast.error('unable to create chat !', 404);
+        }
+    }
 
     return (
-        <Box className={classes.container} >
-            <Box className={classes.userProfileWrappper}>
+        <Box className={classes.container} ref={profileRef}>
+            <Box className={classes.userProfileWrappper} >
                 <Box className={classes.userinfoWrapper}>
                     <Stack direction={'row'} className={classes.userinfoHeader}>
                         <Avatar src={user.profilePic?.url} alt={user.username} sx={{ width: '100px', height: '100px' }} />
@@ -225,7 +248,7 @@ const Profile = () => {
                                     onClick={handleFollow}>
                                     {follow ? "following" : "follow"}
                                 </Button>
-                                <button className={classes.messagebtn} >message</button>
+                                <button onClick={() => handleAccessChat(userId)} className={classes.messagebtn} >message</button>
                             </Box>
                     }
                 </Box>

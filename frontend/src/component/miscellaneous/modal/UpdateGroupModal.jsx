@@ -160,7 +160,7 @@ const UpdateGroupModal = ({ open, onClose, fetchMessages }) => {
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                         <TextField
                             sx={{ flexGrow: 1 }}
-                            label='Group name'
+                            label='Edit group name'
                             placeholder='Enter group name..'
                             type='text'
                             size='small'
@@ -176,7 +176,7 @@ const UpdateGroupModal = ({ open, onClose, fetchMessages }) => {
                         </Button>
                     </Box>
                     <TextField
-                        label='Group members'
+                        label='Add members'
                         placeholder='Add users e.g rakesh,john,abhi'
                         type='text'
                         size='small'

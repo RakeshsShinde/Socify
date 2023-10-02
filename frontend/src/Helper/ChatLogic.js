@@ -1,5 +1,7 @@
 export const getSenderInfo = (loggedinUser, users) => {
-    return users[0]?._id === loggedinUser?._id ? users[1] : users[0];
+    if (users && users?.length > 0) {
+        return users[0]?._id === loggedinUser?._id ? users[1] : users[0];
+    }
 }
 
 export const isSameSender = (messages, m, i, userId) => {
@@ -41,4 +43,14 @@ export const messageMargin = (messages, m, i, userId) => {
 
 export const isSameUser = (messages, m, i) => {
     return i > 0 && messages[i - 1].sender?._id === m.sender?._id;
+}
+
+
+export const formatLatestMessage = (message) => {
+    var maxLength = 25;
+    if (message?.length > maxLength) {
+        return message?.slice(0, maxLength) + '...';
+    } else {
+        return message;
+    }
 }

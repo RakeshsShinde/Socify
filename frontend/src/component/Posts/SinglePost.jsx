@@ -30,17 +30,17 @@ const SinglePost = ({ fullpostview, post }) => {
     const authUser = post?.postBy?._id === user?._id;
     const { Socket } = useSocket();
 
-    useEffect(() => {
-        if (Socket) {
-            Socket.on("post like", (likedata) => {
-                console.log(likedata);
-            })
+    // useEffect(() => {
+    //     if (Socket) {
+    //         Socket.on("post like", (likedata) => {
+    //             console.log(likedata);
+    //         })
 
-            return () => {
-                Socket.off('');
-            };
-        }
-    }, [Socket])
+    //         return () => {
+    //             Socket.off('');
+    //         };
+    //     }
+    // }, [Socket])
 
     useEffect(() => {
         setsave(post?.saveBy?.some((u) => u === user?._id))
@@ -72,7 +72,7 @@ const SinglePost = ({ fullpostview, post }) => {
 
     const handleLike = () => {
         setlike((prev) => !prev);
-        Socket.emit('new like', { user, post });
+        // Socket.emit('new like', { user, post });
         dispatch(likePost(post._id));
     }
 
@@ -151,9 +151,6 @@ const SinglePost = ({ fullpostview, post }) => {
                         <Typography variant='subtitle2'>{post?.saveBy?.length}</Typography>
                     </Stack>
                 </Box>
-                <IconButton >
-                    <BsSave size={20} />
-                </IconButton>
             </Box>
             <Box className={classes.postData}>
                 <Divider />

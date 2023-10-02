@@ -120,7 +120,7 @@ const Home = () => {
         replaylikeError, deleteReplaySuccess, deleteReplayError])
 
     return (
-        <Container style={{  padding: '20px 80px', display: 'flex', gap: "0.2rem",}} maxWidth={'xl'}>
+        <Container style={{  padding: '20px 50px', display: 'flex', gap: "0.2rem",}} maxWidth={'xl'}>
             <LeftSection />
             <PostContainer />
             <RightSection />

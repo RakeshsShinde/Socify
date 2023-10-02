@@ -17,8 +17,8 @@ const SingleReplay = ({ replay }) => {
     const { user } = useSelector((state) => state.Login);
     const authUser = user._id === replay.replayBy._id;
     useEffect(() => {
-        setlike(replay.likes.some((r) => r._id === user._id));
-    }, [replay.likes]);
+        setlike(replay.likes?.some((r) => r._id === user?._id));
+    }, [replay?.likes]);
 
     const handleLike = async () => {
         setlike((prev) => !prev);
@@ -74,7 +74,7 @@ const SingleReplay = ({ replay }) => {
                     </IconButton>
                 )}
             </Stack>
-            <LikeDialog heading={'Likes'} open={openLikeDialog} handleClose={closeLikeDialog} users={replay.likes} />
+            <LikeDialog heading={'Likes'} open={openLikeDialog} handleClose={closeLikeDialog} users={replay?.likes} />
         </>
     );
 }
