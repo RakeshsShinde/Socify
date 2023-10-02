@@ -6,15 +6,16 @@ import { Tab, Tabs } from '@mui/material';
 import SuggestionLoader from '../../miscellaneous/SuggestionLoader';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchUser } from '../../../actions/userActions';
-import { searchByTags } from '../../../actions/postActions';
+import { searchByTags, searchByLocation } from '../../../actions/postActions';
 import SingleHashtag from '../HomeLayout/TrendingHashtags/SingleHashtag';
+import SingleLocation from '../../miscellaneous/SingleLocation';
 
 const Searchbar = () => {
     const [search, setsearch] = useState('');
     const [selectedTab, setSelectedTab] = useState(0);
     const [loadingTabchange, setloadingTabchange] = useState(false);
     const dispatch = useDispatch();
-    const { searchUsers, searchTags, searchCommunity, loading } = useSelector((state) => state.SearchUser);
+    const { searchUsers, searchTags, searchLocation, loading } = useSelector((state) => state.SearchUser);
 
 
     useEffect(() => {
@@ -24,6 +25,9 @@ const Searchbar = () => {
             }
             if (selectedTab == 1) {
                 dispatch(searchByTags(search))
+            }
+            if (selectedTab == 2) {
+                dispatch(searchByLocation(search))
             }
         }
     }, [search, selectedTab, dispatch])
@@ -75,8 +79,18 @@ const Searchbar = () => {
                             <Tab style={{ width: '30%' }} label="Tags" />
                             <Tab style={{ width: '30%' }} label="Community" />
                         </Tabs>
-                        {selectedTab === 0 && searchUsers?.map((user) => <SingleSuggestion key={user._id} user={user} />)}
-                        {selectedTab === 1 && searchTags?.map((tag) => <SingleHashtag key={tag.tagName} tag={tag} />)}
+                        {selectedTab === 0 &&
+                            (searchUsers.length === 0
+                                ? <p className='text-center my-[20px] font-Montserrat text-[18px]'>No matching users</p>
+                                : searchUsers.map((user) => <SingleSuggestion key={user._id} user={user} />))}
+                        {selectedTab === 1 &&
+                            (searchTags.length === 0
+                                ? <p className='text-center my-[20px] font-Montserrat text-[18px]'>No matching tags</p>
+                                : searchTags.map((tag) => <SingleHashtag key={tag.tagName} tag={tag} />))}
+                        {selectedTab === 2 &&
+                            (searchLocation.length === 0
+                                ? <p className='text-center my-[20px] font-Montserrat text-[18px]'>No matching location</p>
+                                : searchLocation.map((loc) => <SingleLocation key={loc.location} loc={loc} />))}
                     </div>
                 ))}
         </div>

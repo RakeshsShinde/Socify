@@ -73,7 +73,20 @@ export const getSinglePost = createAsyncThunk('getSinglePost', async (postId, { 
 
 export const searchByTags = createAsyncThunk('searchByTags', async (keyword, { rejectWithValue }) => {
     try {
-        const { data } = await axios.get(`/post/search?keyword=${keyword}`, {
+        const { data } = await axios.get(`/post/tags/search?keyword=${keyword}`, {
+            headers: {
+                "Content-Type": 'application/json'
+            }
+        })
+        return data;
+    } catch (err) {
+        return rejectWithValue(err.response.data?.message);
+    }
+})
+
+export const searchByLocation = createAsyncThunk('searchByLocation', async (keyword, { rejectWithValue }) => {
+    try {
+        const { data } = await axios.get(`/post/location/search?keyword=${keyword}`, {
             headers: {
                 "Content-Type": 'application/json'
             }
