@@ -23,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         marginBottom: '50px',
-        maxWidth: '62%',
+        width: '62%',
+        minWidth: '62%',
         overflow: 'hidden',
     },
 }))

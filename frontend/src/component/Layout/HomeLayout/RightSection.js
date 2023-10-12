@@ -3,7 +3,7 @@ import ActivitySection from './Activity/ActivitySection';
 
 const RightSection = () => {
     return (
-        <div className='w-[25%]'>
+        <div className='max-w-[25%] w-[20%]'>
             <ActivitySection />
         </div>
     );
