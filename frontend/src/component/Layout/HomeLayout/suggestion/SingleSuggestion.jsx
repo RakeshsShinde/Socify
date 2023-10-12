@@ -6,6 +6,7 @@ import { followUser } from '../../../../actions/userActions';
 import { setUser } from '../../../../reducers/UserReducers/LoginSlice';
 import { Link } from 'react-router-dom';
 import useStyles from './singleSuggestion.style';
+import { useSocket } from '../../../../context/SocketProvider';
 
 const SingleSuggestion = ({ user }) => {
     const classes = useStyles();
@@ -13,6 +14,7 @@ const SingleSuggestion = ({ user }) => {
     const dispatch = useDispatch();
     const { user: loggedinUser } = useSelector((state) => state.Login);
     const postOwner = loggedinUser?._id === user._id;
+    const { Socket } = useSocket();
 
     useEffect(() => {
         setfollow(loggedinUser?.following?.some((u) => u === user._id))
@@ -21,6 +23,16 @@ const SingleSuggestion = ({ user }) => {
     const handleFollow = async () => {
         setfollow((prev) => !prev);
         const { payload } = await dispatch(followUser({ userId: user._id }));
+        if (Socket) {
+            if (!follow) {
+                Socket.emit('new follow', {
+                    senderId: loggedinUser?._id,
+                    message: 'started following you',
+                    type: 'followuser',
+                    receiverId: user?._id,
+                });
+            }
+        }
         await dispatch(setUser(payload?.user));
     }
 
@@ -39,7 +51,7 @@ const SingleSuggestion = ({ user }) => {
                     <Typography variant='subtitle2' className={classes.message}>{user.email}</Typography>
                 </Stack>
                 <Box className={classes.iconContainer}>
-                {!postOwner && (
+                    {!postOwner && (
                         follow ? (
                             <FiUserCheck onClick={handleFollow} color='#0fa3b1' size={20} className={classes.icon} />
                         ) : (

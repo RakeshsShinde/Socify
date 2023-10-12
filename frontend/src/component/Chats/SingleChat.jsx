@@ -6,18 +6,19 @@ import { unselectChat } from '../../reducers/chatreducers/chatSlice';
 import { getSenderInfo } from '../../Helper/ChatLogic';
 import { AiFillEye } from 'react-icons/ai';
 import { sendMessage, getAllmessages } from '../../actions/messageActions';
+import { newNotification } from '../../actions/notificationActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMessages } from '../../reducers/messageReducers/messagesSlice';
 import { toast } from 'react-toastify';
 import Scrollfeed from './Scrollfeed';
 import animationData from '../../animations/typing.json';
-import { setNotification } from '../../reducers/notificationReducer/notificationReducer';
 import { fetchAllchats } from '../../actions/chatActions';
 import Lottie from 'react-lottie';
 import useStyles from './singleChat.style';
 import { useSocket } from '../../context/SocketProvider';
 import UpdateGroupModal from '../miscellaneous/modal/UpdateGroupModal';
 import ProfileViewModal from '../miscellaneous/modal/ProfileViewModal';
+import { setnotifications } from '../../reducers/notificationReducer/notificationSlice'
 
 var selectedChatCmp;
 const SingleChat = () => {
@@ -31,8 +32,8 @@ const SingleChat = () => {
     const classes = useStyles();
     const { Socket, isSocketConnected } = useSocket();
     const { selectedChat } = useSelector((state) => state.Chats);
-    const { notification } = useSelector((state) => state.Notification);
     const { user } = useSelector((state) => state.Login);
+    const { notifications } = useSelector((state) => state.Notifications);
     const { loading, messages } = useSelector((state) => state.Messages);
 
     const defaultOptions = {
@@ -60,9 +61,11 @@ const SingleChat = () => {
         if (Socket) {
             Socket.on('message received', (newMessageReceived) => {
                 if (!selectedChatCmp || selectedChatCmp._id !== newMessageReceived.chat._id) {
-                    if (!notification.includes(newMessageReceived)) {
-                        dispatch(setNotification([newMessageReceived, ...notification]));
-                        dispatch(fetchAllchats());
+                    const hasMatchingNotification = notifications.some((notification) => {
+                        return notification.message && notification.message._id.toString() === newMessageReceived._id.toString();
+                    });
+                    if (!hasMatchingNotification) {
+                        giveNotification(newMessageReceived);
                     }
                 } else {
                     dispatch(setMessages([...messages, newMessageReceived]))
@@ -124,6 +127,18 @@ const SingleChat = () => {
         }
     }
 
+    const giveNotification = async (newMessageReceived) => {
+        const { payload } = await dispatch(newNotification({
+            sender: newMessageReceived.sender._id,
+            type: 'message',
+            desc: "new message",
+            recipients: JSON.stringify(newMessageReceived?.chat?.users?.map(u => u._id)),
+            message: newMessageReceived._id,
+        }))
+        await setnotifications([payload, ...notifications]);
+    }
+
+
 
     return (
         <>
@@ -135,7 +150,7 @@ const SingleChat = () => {
                         }} onClick={() => dispatch(unselectChat())}>
                             <HiArrowLeft size={22} />
                         </IconButton>
-                        <Typography variant='h6'>{!selectedChat.isgroupChat ? getSenderInfo(user, selectedChat.users).username : selectedChat.chatName}</Typography>
+                        <Typography variant='h6'>{!selectedChat?.isgroupChat ? getSenderInfo(user, selectedChat?.users).username : selectedChat?.chatName}</Typography>
                         {!selectedChat.isgroupChat ? (
                             <Tooltip title={'view profile'} placement='bottom'>
                                 <IconButton onClick={() => setopenProfileModal(true)}>

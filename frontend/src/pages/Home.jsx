@@ -12,10 +12,12 @@ import { clearReplayError, clearReplaySuccess } from '../reducers/CommentReducer
 import { clearReplayLikeSuccess, clearReplayLikeError } from '../reducers/CommentReducers/likeReplaySlice';
 import { clearDeleteReplayError, clearDeleteReplaySuccess } from '../reducers/CommentReducers/DeleteReplaySlice';
 import { setMessages } from '../reducers/messageReducers/messagesSlice';
-import { setNotification } from '../reducers/notificationReducer/notificationReducer';
 import { useSocket } from '../context/SocketProvider';
-import { fetchAllchats } from '../actions/chatActions';
 import RightSection from '../component/Layout/HomeLayout/RightSection';
+import { fetchAllchats } from '../actions/chatActions';
+import { setnotifications } from '../reducers/notificationReducer/notificationSlice';
+import { getAllNotifications, newNotification } from '../actions/notificationActions';
+import { getPostOfFollowing } from '../actions/postActions';
 
 const Home = () => {
     const { message, success, user } = useSelector((state) => state.Login);
@@ -30,8 +32,8 @@ const Home = () => {
 
     const { Socket, setisSocketConnected } = useSocket();
     const { selectedChat } = useSelector((state) => state.Chats);
+    const { notifications } = useSelector((state) => state.Notifications);
     const { messages } = useSelector((state) => state.Messages);
-    const { notification } = useSelector((state) => state.Notification);
 
     useEffect(() => {
         if (Socket) {
@@ -41,28 +43,81 @@ const Home = () => {
     }, [Socket, user])
 
     useEffect(() => {
+        dispatch(getAllNotifications())
+    }, [])
+
+    useEffect(() => {
         if (Socket) {
             Socket.on('message received', (newMessageReceived) => {
-                if (!selectedChat || selectedChat?._id !== newMessageReceived?.chat?._id) {
-                    if (!notification.includes(newMessageReceived)) {
-                        dispatch(setNotification([newMessageReceived, ...notification]));
-                        dispatch(fetchAllchats());
+                if (!selectedChat || selectedChat._id !== newMessageReceived.chat._id) {
+                    const hasMatchingNotification = notifications.some((notification) => {
+                        return notification.message && notification.message._id.toString() === newMessageReceived._id.toString();
+                    });
+                    if (!hasMatchingNotification) {
+                        giveMessageNotification(newMessageReceived);
                     }
                 } else {
                     dispatch(setMessages([...messages, newMessageReceived]))
                 }
+                dispatch(fetchAllchats());
             })
-            Socket.on('new like', (post) => {
-                console.log('user like your post !', post._id);
+            Socket.on('post like', (postlikeData) => {
+                giveNotification(postlikeData);
+            })
+            Socket.on('post comment', (commentData) => {
+                giveNotification(commentData);
+            })
+            Socket.on('follow user', (followData) => {
+                giveNotification(followData);
+            })
+            Socket.on('save post', (saveData) => {
+                giveNotification(saveData);
+            })
+            Socket.on('replay comment', (replayData) => {
+                giveNotification(replayData);
+            })
+            Socket.on('comment like', (commentlikeData) => {
+                giveNotification(commentlikeData);
             })
 
             return () => {
                 Socket.off('message received');
-                Socket.off('new like');
+                Socket.off('post like');
+                Socket.off('post comment');
+                Socket.off('follow user');
+                Socket.off('save post');
+                Socket.off('replay comment');
+                Socket.off('comment like');
             };
         }
-
     })
+
+    const giveMessageNotification = async (newMessageReceived) => {
+        const { payload } = await dispatch(newNotification({
+            sender: newMessageReceived.sender._id,
+            type: 'message',
+            desc: "new message",
+            recipients: JSON.stringify(newMessageReceived?.chat?.users?.map(u => u._id)),
+            message: newMessageReceived._id,
+        }))
+        await setnotifications([payload, ...notifications]);
+        await dispatch(getAllNotifications());
+    }
+
+
+    const giveNotification = async (notificationData) => {
+        const { payload } = await dispatch(newNotification({
+            sender: notificationData.senderId,
+            type: notificationData.type,
+            desc: notificationData.message,
+            recipients: JSON.stringify([notificationData.receiverId]),
+            post: notificationData.post,
+        }))
+        await setnotifications([payload, ...notifications]);
+        await dispatch(getAllNotifications());
+        await dispatch(getPostOfFollowing());
+    }
+
 
 
     useEffect(() => {
@@ -120,7 +175,7 @@ const Home = () => {
         replaylikeError, deleteReplaySuccess, deleteReplayError])
 
     return (
-        <Container style={{  padding: '20px 50px', display: 'flex', gap: "0.2rem",}} maxWidth={'xl'}>
+        <Container style={{ padding: '20px 35px', display: 'flex', gap: "0.1rem", }} maxWidth={'xl'}>
             <LeftSection />
             <PostContainer />
             <RightSection />

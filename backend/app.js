@@ -6,6 +6,7 @@ const postRouter = require('./Routes/postRoute');
 const commentRouter = require('./Routes/commentRoute');
 const chatRouter = require('./Routes/chatRoute');
 const messageRouter = require('./Routes/messageRoute');
+const notificationRouter = require('./Routes/notificationRoute');
 const connectDB = require('./config/connectDB');
 const cookieparser = require('cookie-parser');
 const cloudinary = require('cloudinary');
@@ -34,6 +35,7 @@ app.use('/post', postRouter);
 app.use('/comment', commentRouter);
 app.use('/chat', chatRouter);
 app.use('/message', messageRouter);
+app.use('/notification', notificationRouter);
 
 app.use(errormiddleware);
 
@@ -49,18 +51,18 @@ const io = require('socket.io')(server, {
     }
 })
 
-const usersInChats = new Map(); 
+
 io.on('connection', (socket) => {
     console.log('connected to socket.io');
 
     socket.on('setup', (userData) => {
-        socket.join(userData._id);
+        socket.join(userData?._id);
         socket.emit('connected');
     })
 
     socket.on('join room', (room) => {
         socket.join(room);
-        console.log('user joined romm :' + room);
+        console.log('user joined room :' + room);
     })
 
     socket.on('typing', (room) => {
@@ -82,10 +84,28 @@ io.on('connection', (socket) => {
         })
     })
 
-    // socket.on('new like', (likedata) => {
-    //     console.log(likedata);
-    //     socket.to(likedata.post?.postBy?._id).emit('post like', likedata);
-    // })
+    socket.on('new like', (likedata) => {
+        socket.to(likedata.receiverId).emit('post like', likedata);
+    })
+
+    socket.on('new comment', (commentData) => {
+        socket.to(commentData.receiverId).emit('post comment', commentData);
+    })
+
+    socket.on('new follow', (followData) => {
+        socket.to(followData.receiverId).emit('follow user', followData);
+    })
+
+    socket.on('new save', (saveData) => {
+        socket.to(saveData.receiverId).emit('save post', saveData);
+    })
+
+    socket.on('new replay', (replayData) => {
+        socket.to(replayData.receiverId).emit('replay comment', replayData);
+    })
+    socket.on('new commentLike', (commentlikeData) => {
+        socket.to(commentlikeData.receiverId).emit('like comment', commentlikeData);
+    })
 
 
     socket.off('setup', () => {

@@ -10,7 +10,7 @@ import formatDate from '../../Helper/FormatDate';
 import useStyle from './singleComment.style';
 import { getPostOfFollowing } from '../../actions/postActions';
 import LikeDialog from '../miscellaneous/modal/Likemodel';
-
+import { useSocket } from '../../context/SocketProvider';
 
 const SingleComment = ({ comment }) => {
     const classes = useStyle();
@@ -21,6 +21,7 @@ const SingleComment = ({ comment }) => {
     const { user } = useSelector((state) => state.Login);
     const dispatch = useDispatch();
     const authUser = user?._id === comment.commentBy?._id;
+    const { Socket } = useSocket();
 
     useEffect(() => {
         setlike(comment.likes?.some((c) => c._id === user._id));
@@ -33,7 +34,17 @@ const SingleComment = ({ comment }) => {
 
     const handleLike = async () => {
         setlike((prev) => !prev);
-        await dispatch(likeComment({ commentId: comment._id }))
+        await dispatch(likeComment({ commentId: comment._id }));
+        if (Socket) {
+            Socket.emit('new commentLike', {
+                senderId: user?._id,
+                message: 'likes your comment',
+                type: 'likeComment',
+                post: comment?.post,
+                receiverId: comment?.commentBy?._id,
+            });
+
+        }
     }
 
     const deletePost = async () => {
@@ -118,7 +129,7 @@ const SingleComment = ({ comment }) => {
             </Stack>
 
             <Box>
-                {replaytoComment && (<ReplayToComment commentId={comment._id} />)}
+                {replaytoComment && (<ReplayToComment comment={comment} />)}
                 {comment.replies?.map((replay) => (
                     showReplies && (<SingleReplay key={replay._id} replay={replay} />)
                 ))}

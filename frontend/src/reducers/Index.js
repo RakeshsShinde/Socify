@@ -30,7 +30,8 @@ import updateGroupreducer from '../reducers/chatreducers/updateProfileSlice'
 import AddNRemoveUsers from '../reducers/chatreducers/addNRemoveUsersSlice';
 import singleMessageReducer from '../reducers/messageReducers/singleMessageSlice';
 import MessagesReducer from '../reducers/messageReducers/messagesSlice';
-import NotificationReducer from '../reducers/notificationReducer/notificationReducer';
+import NotificationReducer from '../reducers/notificationReducer/notificationSlice';
+import NewNotification from '../reducers/notificationReducer/NewNotification';
 import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage';
 
@@ -66,10 +67,9 @@ const rootReducer = combineReducers({
     AddNRemoveUsers: AddNRemoveUsers,
     SingleMessage: singleMessageReducer,
     Messages: MessagesReducer,
-    Notification: NotificationReducer,
-
+    Notifications: NotificationReducer,
+    NewNotification: NewNotification,
 })
-
 
 const persistConfig = {
     key: 'root',

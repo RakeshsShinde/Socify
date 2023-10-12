@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
         height: "30px"
     },
     addcommentInput: {
-        minWidth: "80%",
+        minWidth: "83%",
         height: "25px",
         fontFamily: '"Nunito Sans", sans-serif !important',
         fontSize: '16px',

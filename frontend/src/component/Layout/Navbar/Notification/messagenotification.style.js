@@ -5,6 +5,7 @@ const useStyles = makeStyles((theme) => ({
         filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
         width: '450px',
         height: '320px',
+        padding: '15px',
         mt: 1.5,
         '& .MuiAvatar-root': {
             width: 50,
@@ -25,6 +26,20 @@ const useStyles = makeStyles((theme) => ({
             zIndex: 0,
         },
     },
+    noMessage: {
+        fontSize: '16px',
+        color: 'gray',
+        marginLeft: '25px',
+        fontWeight: '500 !important ',
+        fontFamily: "'Poppins', sans-serif !important"
+    },
+    heading: {
+        fontSize: '15px',
+        fontFamily: '"Work Sans", sans-serif !important',
+    },
+    divider: {
+        margin: '5px 0px !important'
+    }
 }))
 
 export default useStyles;

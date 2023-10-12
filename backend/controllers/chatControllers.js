@@ -158,6 +158,7 @@ const addUsersToGroup = async (req, res, next) => {
 //removed user from existing group
 const removeUser = async (req, res, next) => {
     const { userId, groupId } = req.body;
+    const { user } = req;
     try {
         const group = await Chat.findById(groupId);
 
@@ -174,6 +175,13 @@ const removeUser = async (req, res, next) => {
         const fullgroup = await Chat.findById(groupId)
             .populate('users', '-password')
             .populate('groupAdmin', '-password')
+
+        if (userId == user._id) {
+            return res.status(200).json({
+                success: true,
+                message: 'leave group successfully !',
+            })
+        }
 
         return res.status(200).json({
             success: true,

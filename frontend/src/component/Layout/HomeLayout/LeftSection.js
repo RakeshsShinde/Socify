@@ -1,31 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import TrendingHashtags from '../HomeLayout/TrendingHashtags/TrendingHashtags';
-import Suggestions from '../HomeLayout/suggestion/Suggestions';
-import axios from 'axios';
+import Suggestions from './suggestion/Suggestions';
 
-const Friends = () => {
-    const [trending, settrending] = useState([]);
-    useEffect(() => {
-        fetchTrendingPosts();
-    }, [])
-
-
-    const fetchTrendingPosts = async () => {
-        const { data } = await axios.get('/post/trending', {
-            headers: {
-                "Content-Type": 'application/json',
-            }
-        })
-        settrending(data.trendingTags)
-    }
+const LeftSection = () => {
     return (
         <>
             <div className='flex flex-col gap-3 min-w-[20%]' >
-                <TrendingHashtags trendingTags={trending} />
+                <TrendingHashtags />
                 <Suggestions />
             </div>
         </>
     );
 }
 
-export default Friends;
+export default LeftSection;

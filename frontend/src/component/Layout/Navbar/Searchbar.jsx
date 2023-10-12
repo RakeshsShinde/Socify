@@ -77,7 +77,7 @@ const Searchbar = () => {
                         <Tabs value={selectedTab} onChange={handleTabChange} >
                             <Tab style={{ width: '30%' }} label="Users" />
                             <Tab style={{ width: '30%' }} label="Tags" />
-                            <Tab style={{ width: '30%' }} label="Community" />
+                            <Tab style={{ width: '30%' }} label="Location" />
                         </Tabs>
                         {selectedTab === 0 &&
                             (searchUsers.length === 0

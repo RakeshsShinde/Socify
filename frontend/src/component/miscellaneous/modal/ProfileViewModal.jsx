@@ -5,11 +5,13 @@ import { profileViewModal, useStyles } from './ProfileViewModal.style';
 import { useSelector, useDispatch } from 'react-redux';
 import { followUser } from '../../../actions/userActions';
 import { setUser } from '../../../reducers/UserReducers/LoginSlice';
+import { useSocket } from '../../../context/SocketProvider';
 
 const ProfileViewModal = ({ open, onClose, user }) => {
     const classes = useStyles();
     const [follow, setfollow] = useState(false);
     const dispatch = useDispatch();
+    const Socket = useSocket();
     const { user: loggedinUser } = useSelector((state) => state.Login);
 
     useEffect(() => {
@@ -19,6 +21,16 @@ const ProfileViewModal = ({ open, onClose, user }) => {
     const handleFollow = async () => {
         setfollow((prev) => !prev)
         const { payload } = await dispatch(followUser({ userId: user?._id }));
+        if (Socket) {
+            if (!follow) {
+                Socket.emit('new follow', {
+                    senderId: loggedinUser?._id,
+                    message: 'started following you',
+                    type: 'followuser',
+                    receiverId: user?._id,
+                });
+            }
+        }
         await dispatch(setUser(payload?.user));
     }
 

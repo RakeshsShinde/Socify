@@ -18,14 +18,13 @@ import { toast } from 'react-toastify';
 const useStyles = makeStyles((theme) => ({
     mainContainer: {
         backgroundColor: 'transparent',
-        padding: '10px 15px',
+        padding: '10px 5px',
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
         marginBottom: '50px',
-        width: '75%',
+        maxWidth: '62%',
         overflow: 'hidden',
-
     },
 }))
 

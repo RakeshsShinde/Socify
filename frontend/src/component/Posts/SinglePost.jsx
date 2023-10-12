@@ -30,25 +30,11 @@ const SinglePost = ({ fullpostview, post }) => {
     const authUser = post?.postBy?._id === user?._id;
     const { Socket } = useSocket();
 
-    // useEffect(() => {
-    //     if (Socket) {
-    //         Socket.on("post like", (likedata) => {
-    //             console.log(likedata);
-    //         })
-
-    //         return () => {
-    //             Socket.off('');
-    //         };
-    //     }
-    // }, [Socket])
-
     useEffect(() => {
         setsave(post?.saveBy?.some((u) => u === user?._id))
         setlike(post?.likes?.some((p) => p._id === user?._id))
         setfollow(user?.following?.some((u) => u === post?.postBy?._id))
     }, [post?.likes, user?.following, post?.saveBy])
-
-
 
     const handleFollow = async () => {
         setfollow((prev) => !prev)
@@ -59,6 +45,17 @@ const SinglePost = ({ fullpostview, post }) => {
     const handleSave = async () => {
         setsave((prev) => !prev)
         const { payload } = await dispatch(savePost(post._id));
+        if (!save) {
+            if (post?.postBy?._id !== user?._id) {
+                Socket.emit('new save', {
+                    senderId: user?._id,
+                    message: 'saved your post',
+                    type: 'postsave',
+                    post: post?._id,
+                    receiverId: post?.postBy?._id,
+                });
+            }
+        }
         await dispatch(setUser(payload?.user));
     }
 
@@ -72,7 +69,17 @@ const SinglePost = ({ fullpostview, post }) => {
 
     const handleLike = () => {
         setlike((prev) => !prev);
-        // Socket.emit('new like', { user, post });
+        if (!like) {
+            if (post?.postBy?._id !== user?._id) {
+                Socket.emit('new like', {
+                    senderId: user?._id,
+                    message: 'likes your post',
+                    type: 'postlike',
+                    post: post?._id,
+                    receiverId: post?.postBy?._id,
+                });
+            }
+        }
         dispatch(likePost(post._id));
     }
 
@@ -203,7 +210,7 @@ const SinglePost = ({ fullpostview, post }) => {
             {showComment && (
                 <Box className={classes.commentSection} >
                     < Divider />
-                    <Addcomment postId={post?._id} showComment={showComment} />
+                    <Addcomment post={post} showComment={showComment} />
 
                     {fullpostview ? (
                         <Box className={`${classes.commentSection}  `}>

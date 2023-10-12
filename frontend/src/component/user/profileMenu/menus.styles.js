@@ -5,6 +5,7 @@ const useStyles = makeStyles((theme) => ({
     menuItem: {
         height: '40px',
         margin: '5px 0px !important',
+        padding: '8px 0px',
         "&:hover": {
             backgroundColor: '#f8f9fa !important'
         }
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'hidden !important',
         filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
         width: '250px',
-        height: '320px',
+        height: '280px',
         mt: 1.5,
         '& .MuiAvatar-root': {
             width: 50,

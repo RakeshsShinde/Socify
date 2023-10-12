@@ -55,7 +55,6 @@ const Menus = ({ anchorEl, handleClose, open }) => {
                             <Button variant='outlined' className={classes.button} >view profile</Button>
                         </Link>
                     </Stack>
-
                 </Box>
                 <Divider />
                 <MenuItem
@@ -73,14 +72,6 @@ const Menus = ({ anchorEl, handleClose, open }) => {
                         <CgProfile size={20} />
                     </ListItemIcon>
                     Edit Profile
-                </MenuItem>
-                <MenuItem
-                    className={classes.menuItem}
-                    onClick={handleClose}>
-                    <ListItemIcon>
-                        <HiMiniUserGroup size={20} />
-                    </ListItemIcon>
-                    Create New Community
                 </MenuItem>
                 <MenuItem
                     className={classes.menuItem}

@@ -25,5 +25,19 @@ export const formatDateinChat = (postdate) => {
 
 }
 
+export const formatDateinNotification = (notificationDate) => {
+    const currentDate = moment();
+    const duration = moment.duration(currentDate.diff(moment(notificationDate)));
+    if (duration.asSeconds() < 60) {
+        return `${Math.round(duration.asSeconds())}s`;
+    } else if (duration.asMinutes() < 60) {
+        return `${Math.round(duration.asMinutes())}m`;
+    } else if (duration.asHours() < 24) {
+        return `${Math.round(duration.asHours())}h`;
+    } else {
+        return `${Math.round(duration.asDays())}d`;
+    }
+}
+
 
 export default formatDate;
