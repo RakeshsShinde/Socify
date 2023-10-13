@@ -56,7 +56,7 @@ const getAllNotification = async (req, res, next) => {
                         select: 'username profilePic email',
                     }
                 }
-            });
+            }).sort({ createdAt: -1 });
 
         return res.status(200).json(notifications);
     } catch (err) {
@@ -89,4 +89,4 @@ const markNotificationAsRead = async (req, res, next) => {
 
 
 
-module.exports = { createNotification, getAllNotification,markNotificationAsRead }
+module.exports = { createNotification, getAllNotification, markNotificationAsRead }

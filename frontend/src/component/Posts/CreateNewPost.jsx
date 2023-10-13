@@ -139,6 +139,7 @@ const CreateNewPost = ({ open, setopen, post }) => {
                         onChange={(e) => setcaption(e.target.value)}
                         rows={7}
                         variant="filled"
+                        style={{ whiteSpace: 'pre-wrap' }}
                     />
                     <TextField
                         placeholder="e.g nashik,new york"

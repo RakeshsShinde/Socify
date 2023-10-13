@@ -106,7 +106,7 @@ const MyChats = () => {
                                 color: selectedChat === c ? "white" : "black",
                             }}
                         >
-                            <Avatar src={c ? (!c.isgroupChat ? getSenderInfo(user, c.users).profilePic.url : c.profilePic?.url) : ''} alt={'profilePic'} sx={{ width: '40px', height: '40px' }} />
+                            <Avatar src={c ? (!c.isgroupChat ? getSenderInfo(user, c?.users).profilePic?.url : c.profilePic?.url) : ''} alt={'profilePic'} sx={{ width: '40px', height: '40px' }} />
                             <Box className={classes.chatInfoWrapper}  >
                                 <Typography variant='subtitle1' className={classes.chatName} >
                                     {c ? (!c.isgroupChat ? getSenderInfo(user, c.users).username : c.chatName) : ''}
