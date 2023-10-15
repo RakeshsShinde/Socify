@@ -33,6 +33,51 @@
 
 ![Screenshot 2023-10-13 18 41 31](https://github.com/RakeshsShinde/Socify/assets/84784475/cc508292-a003-4589-820e-dad89520e219)
 
+## Create New Post:
+## you can create the new post click on upload icon in bottom navigation or by clicking on create new post in menu. you can add caption,location,multiple tags ,and images for the post.
+
+![Screenshot 2023-10-15 09 27 55](https://github.com/RakeshsShinde/Socify/assets/84784475/d4435bbc-e4cf-4921-986e-63e88e518600)
+
+![Screenshot 2023-10-15 09 33 57](https://github.com/RakeshsShinde/Socify/assets/84784475/84d7ae06-d0c0-4115-a980-81073315981a)
+
+# Edit post :
+# user can edit own post caption,location,and tags
+
+![Screenshot 2023-10-15 09 36 15](https://github.com/RakeshsShinde/Socify/assets/84784475/95d24f42-2691-49da-bc1f-c0bf7070fd1d)
+
+# Delete post:
+
+![Screenshot 2023-10-15 09 38 42](https://github.com/RakeshsShinde/Socify/assets/84784475/3fa7eaf4-430f-4c1a-b197-b82eb1f636a8)
+
+## user can like the post,comment on post,saved post,like comment,replay on comment,like replay
+
+## Like post:
+
+![Screenshot 2023-10-15 10 56 08](https://github.com/RakeshsShinde/Socify/assets/84784475/ba75c23c-a73d-49d0-9a1f-885131b1e9eb)
+
+## Comment on Post :
+
+![Screenshot 2023-10-15 11 00 01](https://github.com/RakeshsShinde/Socify/assets/84784475/aeb60254-a783-4eeb-a202-aa4f4bf8c26d)
+
+## Saved Post :
+
+![Screenshot 2023-10-15 11 07 05](https://github.com/RakeshsShinde/Socify/assets/84784475/13ff55c5-979d-4e56-b63a-acf0ccd81075)
+
+## Replay on Post :
+
+![Screenshot 2023-10-15 13 05 51](https://github.com/RakeshsShinde/Socify/assets/84784475/2d96a640-1601-4407-8d84-226742e88864)
+
+## user can also like comments and replies:
+
+![Screenshot 2023-10-15 13 08 13](https://github.com/RakeshsShinde/Socify/assets/84784475/c3c9632c-e6fe-444a-87e5-bfa61f62b1b4)
+
+
+![Screenshot 2023-10-15 13 15 42](https://github.com/RakeshsShinde/Socify/assets/84784475/aeb77af5-8680-46ea-8100-2e6f3eb7a9cf)
+
+
+
+
+
 
 
 
