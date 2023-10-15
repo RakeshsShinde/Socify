@@ -182,7 +182,7 @@ const SinglePost = ({ fullpostview, post }) => {
                         variant='subtitle1'
                         className={classes.postdesc}
                     >
-                        {post?.caption}
+                        <pre>{post?.caption}</pre>
                     </Typography>
                     {post?.tags?.length > 0 ? (
                         <Box className={classes.tags}>
