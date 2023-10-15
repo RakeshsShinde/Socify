@@ -38,10 +38,12 @@
 
 ![Screenshot 2023-10-15 09 27 55](https://github.com/RakeshsShinde/Socify/assets/84784475/d4435bbc-e4cf-4921-986e-63e88e518600)
 
+
+
 ![Screenshot 2023-10-15 09 33 57](https://github.com/RakeshsShinde/Socify/assets/84784475/84d7ae06-d0c0-4115-a980-81073315981a)
 
 # Edit post :
-# user can edit own post caption,location,and tags
+## user can edit own post caption,location,and tags
 
 ![Screenshot 2023-10-15 09 36 15](https://github.com/RakeshsShinde/Socify/assets/84784475/95d24f42-2691-49da-bc1f-c0bf7070fd1d)
 
@@ -73,6 +75,68 @@
 
 
 ![Screenshot 2023-10-15 13 15 42](https://github.com/RakeshsShinde/Socify/assets/84784475/aeb77af5-8680-46ea-8100-2e6f3eb7a9cf)
+
+# View All Likes :
+
+![Screenshot 2023-10-15 13 25 33](https://github.com/RakeshsShinde/Socify/assets/84784475/034c24c3-fe8f-472d-8f69-e4426e38741c)
+
+
+# Integrated search features:
+
+## you can effortlessly search for keywords across multiple categories, including locations, users, and tags.
+
+
+![Screenshot 2023-10-15 13 47 30](https://github.com/RakeshsShinde/Socify/assets/84784475/a90ce26e-53c7-45e1-9951-70917f03562d)
+
+
+![Screenshot 2023-10-15 13 47 41](https://github.com/RakeshsShinde/Socify/assets/84784475/f29589d2-a541-4fa4-8503-a3cca127e6cd)
+
+
+
+![Screenshot 2023-10-15 13 47 57](https://github.com/RakeshsShinde/Socify/assets/84784475/033e35a7-a1cc-4cef-b319-93629aafcc1a)
+
+
+# Profile Page(other users):
+
+## if you click on particular user's profilepic then redirect to user's profile ,and if you click on the view profile in user menu or in bottom navigation then redirect to own profile .
+
+## you can see all posts by that user and also connect with that user using email or clicking message button and send message to that user.
+
+
+![Screenshot 2023-10-15 13 49 15](https://github.com/RakeshsShinde/Socify/assets/84784475/16126d54-240d-4111-b711-27a429b16291)
+
+
+
+## you can also check the all followers and all users that the user are following :
+
+![Screenshot 2023-10-15 14 34 52](https://github.com/RakeshsShinde/Socify/assets/84784475/a0255910-b01c-4f18-927f-87242d7be1da)
+
+
+![Screenshot 2023-10-15 14 35 05](https://github.com/RakeshsShinde/Socify/assets/84784475/19350469-af46-46d4-909d-35cc25584a97)
+
+
+
+# Profile Page (own profile):
+
+# only logged-in user can see saved posts by him/her :
+
+![Screenshot 2023-10-15 14 39 20](https://github.com/RakeshsShinde/Socify/assets/84784475/41aa997e-5d9c-4a9d-af73-b982749f1aa6)
+
+
+# Edit Profile :
+## you can edit the your username,email,Bio,password and profile picture.
+
+
+![Screenshot 2023-10-15 14 45 07](https://github.com/RakeshsShinde/Socify/assets/84784475/ada9c002-2c65-47d8-9202-5e37e86e2f0e)
+
+
+
+# Posts By Tags:
+
+## when user click on particular tag then get all posts having that tag and also total no of posts by that tag
+
+![Screenshot 2023-10-15 15 04 22](https://github.com/RakeshsShinde/Socify/assets/84784475/5b62463d-7aa2-45bc-b674-6e5a16d2cb63)
+
 
 
 
