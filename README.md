@@ -151,6 +151,56 @@
 ![Screenshot 2023-10-17 07 36 14](https://github.com/RakeshsShinde/Socify/assets/84784475/6d9f1edb-2230-4051-9277-955bed87f550)
 
 
+# Chat Page :
+## on left side having all chats of user and on right side is all messages for particular chat .
+
+![Screenshot 2023-10-17 08 19 36](https://github.com/RakeshsShinde/Socify/assets/84784475/e986c3b0-72f5-4531-9f83-76771fc4f503)
+
+
+# Create New Chat 
+
+## user can create one on one chat or group chat with others users .
+
+- one on one chat :
+## user can search other user to chat with and select a user and create one on one chat.
+
+
+![Screenshot 2023-10-17 08 27 07](https://github.com/RakeshsShinde/Socify/assets/84784475/8586126a-2f4f-4378-9407-cbe9085f27dd)
+
+
+
+![Screenshot 2023-10-17 08 27 21](https://github.com/RakeshsShinde/Socify/assets/84784475/4365cdc5-916d-4a48-a485-d9ee21ae59d1)
+<br/>
+
+## user can create group chat by clicking on the create new group icon at top and create new group chat 
+
+![Screenshot 2023-10-17 08 31 12](https://github.com/RakeshsShinde/Socify/assets/84784475/b505e491-23d2-4006-b91b-d25061865a3b)
+
+
+## you can send message in chat in realtime using socket.io 
+
+
+![Screenshot 2023-10-17 08 35 00](https://github.com/RakeshsShinde/Socify/assets/84784475/f32aa858-4eca-4535-9734-225345c0edc5)
+
+
+# Update Group :
+
+## you can update following :
+
+- update profile picture of group. 
+- update group name.
+- Add new users to group (only group admin can add someone to group).
+- Remove user from group (only group admin can remove someone from group).
+- Leave group .
+
+
+![Screenshot 2023-10-17 08 42 04](https://github.com/RakeshsShinde/Socify/assets/84784475/fcc47573-935f-421b-b396-939b023765c2)
+
+
+# Leave group
+# user can leave group by clicking on leave group and group get deleted from chat list.
+
+![Screenshot 2023-10-17 08 46 12](https://github.com/RakeshsShinde/Socify/assets/84784475/bbf08e52-7ae6-4146-bbb5-46babd2f1560)
 
 
 
