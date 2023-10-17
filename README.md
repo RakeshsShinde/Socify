@@ -53,30 +53,30 @@
 
 ## user can like the post,comment on post,saved post,like comment,replay on comment,like replay
 
-## Like post:
+- Like post:
 
 ![Screenshot 2023-10-15 10 56 08](https://github.com/RakeshsShinde/Socify/assets/84784475/ba75c23c-a73d-49d0-9a1f-885131b1e9eb)
 
-## Comment on Post :
+- Comment on Post :
 
 ![Screenshot 2023-10-15 11 00 01](https://github.com/RakeshsShinde/Socify/assets/84784475/aeb60254-a783-4eeb-a202-aa4f4bf8c26d)
 
-## Saved Post :
+- Saved Post :
 
 ![Screenshot 2023-10-15 11 07 05](https://github.com/RakeshsShinde/Socify/assets/84784475/13ff55c5-979d-4e56-b63a-acf0ccd81075)
 
-## Replay on Post :
+- Replay on Post :
 
 ![Screenshot 2023-10-15 13 05 51](https://github.com/RakeshsShinde/Socify/assets/84784475/2d96a640-1601-4407-8d84-226742e88864)
 
-## user can also like comments and replies:
+ - user can also like comments and replies:
 
 ![Screenshot 2023-10-15 13 08 13](https://github.com/RakeshsShinde/Socify/assets/84784475/c3c9632c-e6fe-444a-87e5-bfa61f62b1b4)
 
 
 ![Screenshot 2023-10-15 13 15 42](https://github.com/RakeshsShinde/Socify/assets/84784475/aeb77af5-8680-46ea-8100-2e6f3eb7a9cf)
 
-# View All Likes :
+ - View All Likes :
 
 ![Screenshot 2023-10-15 13 25 33](https://github.com/RakeshsShinde/Socify/assets/84784475/034c24c3-fe8f-472d-8f69-e4426e38741c)
 
@@ -86,14 +86,14 @@
 ## you can effortlessly search for keywords across multiple categories, including locations, users, and tags.
 
 
-![Screenshot 2023-10-15 13 47 30](https://github.com/RakeshsShinde/Socify/assets/84784475/a90ce26e-53c7-45e1-9951-70917f03562d)
+![Screenshot 2023-10-15 13 47 30](https://github.com/RakeshsShinde/Socify/assets/84784475/a90ce26e-53c7-45e1-9951-70917f03562d) <br/>
 
 
-![Screenshot 2023-10-15 13 47 41](https://github.com/RakeshsShinde/Socify/assets/84784475/f29589d2-a541-4fa4-8503-a3cca127e6cd)
+![Screenshot 2023-10-15 13 47 41](https://github.com/RakeshsShinde/Socify/assets/84784475/f29589d2-a541-4fa4-8503-a3cca127e6cd)  <br/>
 
 
 
-![Screenshot 2023-10-15 13 47 57](https://github.com/RakeshsShinde/Socify/assets/84784475/033e35a7-a1cc-4cef-b319-93629aafcc1a)
+![Screenshot 2023-10-15 13 47 57](https://github.com/RakeshsShinde/Socify/assets/84784475/033e35a7-a1cc-4cef-b319-93629aafcc1a) <br/>
 
 
 # Profile Page(other users):
@@ -138,6 +138,17 @@
 ![Screenshot 2023-10-15 15 04 22](https://github.com/RakeshsShinde/Socify/assets/84784475/5b62463d-7aa2-45bc-b674-6e5a16d2cb63)
 
 
+# Posts By Location:
+##  when user click on particular location then get all posts having that location and also total no of posts by that location.
+
+![Screenshot 2023-10-17 07 27 00](https://github.com/RakeshsShinde/Socify/assets/84784475/c3c56069-33bc-4593-b075-acbc9a2bad45)
+
+
+# Delete Account :
+## user can delete own Account after deleting Account, all posts of user get deleted and redirect to login page 
+
+
+![Screenshot 2023-10-17 07 36 14](https://github.com/RakeshsShinde/Socify/assets/84784475/6d9f1edb-2230-4051-9277-955bed87f550)
 
 
 
